@@ -1,0 +1,57 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.wrapper {
+    width: 55%;
+    margin: auto;
+}
+.task__form {
+    display: grid;
+    grid-template: repeat(7, auto) / 2fr 7fr;
+    gap: 10px;
+    align-items: center;
+    width: 70%;
+    margin: auto;
+}
+.task__label {
+    display: inline-block;
+    text-align: right; 
+    word-break: break-all;
+}
+.task__label_textarea {
+    align-self: start;
+}
+.task__textarea {
+    padding: 5px;
+}
+.submit {
+    width: 70px;
+    height: 23px;
+}
+.select {
+    width: 100px;
+}
+.task__duration-container {
+    width: 50%;
+}
+.task__input-time,
+.task__input-date {
+    width: 110px;
+}
+.duration__select,
+.duration__number {
+    width: 50px;
+}
+.table {
+    width:100%;
+}
+.table__th,
+.table__td {
+    text-align: left;
+}
+.task-list__sumbit {
+    float:right;
+}
