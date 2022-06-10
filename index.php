@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Мой календарь</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styles/style.css">
 </head>
 <body>
     <?php 
@@ -55,7 +55,7 @@
     </div>
     <div class="wrapper">
         <div class="task-list">
-            <h2 class="subtitle">Список задач</h2>
+            <h2 class="subtitle task-list__subtitle">Список задач</h2>
             <form class="task-list__filters" method="post">
                 <select name="task_filter" class="task-list__select select">
                     <option value="1" <?php if ($_SESSION["status_type"] == '1') echo "selected" ?>>Текущие задачи</option>
@@ -112,16 +112,16 @@
                         array_push($tasks_data, $task);
 
                         echo 
-                        "<form method='post' action='php/change_status.php'><tr onclick='show_card(" . $task['id'] . ")'>
-                        <td class='table_td'> 
+                        "<form method='post' action='php/change_status.php'><tr class='table__tr' onclick='show_card(" . $task['id'] . ")'>
+                        <td class='table__td'> 
                             <input type='checkbox' name='" . $task['id'] . "'" .
                             $if_checked . 
                             "onChange='submit()'>
                         </td>" .
-                        "<td class='table_td'> " . $task['type'] . "</td>" .
-                        "<td class='table_td'> " . $task['name'] . "</td>" .
-                        "<td class='table_td'> " . $task['place'] . "</td>" .
-                        "<td class='table_td'> " . $task['dt'] . "</td>
+                        "<td class='table__td'> " . $task['type'] . "</td>" .
+                        "<td class='table__td'> " . $task['name'] . "</td>" .
+                        "<td class='table__td'> " . $task['place'] . "</td>" .
+                        "<td class='table__td'> " . $task['dt'] . "</td>
                         </tr></form>";
                     }
                 ?>

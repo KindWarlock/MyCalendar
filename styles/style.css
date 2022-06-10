@@ -8,6 +8,10 @@
     width: 55%;
     margin: auto;
 }
+.task {
+    border: 1px solid rgb(63, 63, 63);
+    padding: 20px;
+}
 .task__form {
     display: grid;
     grid-template: repeat(7, auto) / 2fr 7fr;
@@ -45,16 +49,56 @@
 .duration__number {
     width: 50px;
 }
+
 .table {
     width:100%;
+    border-collapse: collapse;
 }
 .table__th,
 .table__td {
     text-align: left;
 }
+.table__th {
+    padding: 0 2px 8px 2px;
+    border-left: 1px solid rgb(122, 122, 122);  
+}
+.table__td {
+    padding: 2px 4px;
+    border-left: 1px solid rgb(122, 122, 122);  
+}
+.table__th:first-of-type,
+.table__td:first-of-type {
+    border-left: 0 solid rgb(190, 190, 190);
+}
+.table__tr:nth-child(2n) {
+    background-color: rgb(206, 206, 206);
+}
+.table__td {
+    background-color: inherit;
+}
 .task-list__sumbit {
     float:right;
 }
+.task-list__select {
+    width:150px;
+}
 .id_field {
     display:none;
+}
+.title {
+    display: block;
+    margin:10px 30px;
+}
+.subtitle {
+    margin: 0 0 10px 0;
+}
+.task {
+    margin: 40px 0 ;
+}
+.task-list__filters {
+    margin: 10px 0;
+}
+.task-list__subtitle {
+    padding: 0 0 5px 0;
+    border-bottom: 1px solid rgb(119, 119, 119);
 }
