@@ -55,3 +55,6 @@
 .task-list__sumbit {
     float:right;
 }
+.id_field {
+    display:none;
+}

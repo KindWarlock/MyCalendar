@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Мой календарь</title>
-    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <?php 
@@ -83,32 +83,37 @@
                         case '2':
                             $sql = "SELECT * 
                             FROM `tasks` 
-                            JOIN `types` ON `type_id` = types.id
+                            JOIN `types` USING (type_id)
                             WHERE `status` = '0' AND DATE(`dt`) < DATE(NOW());";
                             break;
                         case '3':
                             $sql = "SELECT * 
                             FROM `tasks` 
-                            JOIN `types` ON `type_id` = types.id
+                            JOIN `types` USING (type_id)
                             WHERE `status` = '1';";
                             break;
                         case '4':
                             $sql = "SELECT * 
                             FROM `tasks` 
-                            JOIN `types` ON `type_id` = types.id
+                            JOIN `types` USING (type_id)
                             WHERE DATE(`dt`) = '" . $_SESSION['dt'] . "';";
                             break;
                         default:
                             $sql = "SELECT * 
                             FROM `tasks` 
-                            JOIN `types` ON `type_id` = types.id
+                            JOIN `types` USING (type_id)
                             WHERE `status` = '0' AND `dt` < NOW();";
                     }
                     $tasks = $db->query($sql)->fetchAll($mode=PDO::FETCH_ASSOC);
+                    $tasks_data = array();
                     foreach ($tasks as $task) {
                         $if_checked = $task['status'] == 1 ? " checked " : "";
+
+                        array_push($tasks_data, $task);
+
                         echo 
-                        "<form method='post' action='php/change_status.php'><tr><td class='table_td'> 
+                        "<form method='post' action='php/change_status.php'><tr onclick='show_card(" . $task['id'] . ")'>
+                        <td class='table_td'> 
                             <input type='checkbox' name='" . $task['id'] . "'" .
                             $if_checked . 
                             "onChange='submit()'>
@@ -120,9 +125,15 @@
                         </tr></form>";
                     }
                 ?>
+                <script>
+                    var tasks_data = <?php echo json_encode($tasks_data);?>;
+                </script>
             </table>
         </div>
     </div>
-    <script src="js/script.js"></script>
+    
+    <script src="js/script.js">
+        
+    </script>
 </body>
 </html>

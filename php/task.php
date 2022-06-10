@@ -6,7 +6,7 @@ ini_set('display_errors', '1');
     $task_data = $_POST;
 
     //get type_id
-    $sql = "SELECT `id` FROM `types` WHERE `type` = '" . $task_data['type'] . "' LIMIT 1;"; 
+    $sql = "SELECT `type_id` FROM `types` WHERE `type` = '" . $task_data['type'] . "' LIMIT 1;"; 
     $type_id = $db->query($sql)->fetch(PDO::FETCH_NUM)[0];
     
     //get timestamp
@@ -19,35 +19,61 @@ ini_set('display_errors', '1');
         $task_data["duration"] *= 60;
     }
 
-    $stmt = "INSERT INTO `tasks`(
-        `name`, 
-        `type_id`, 
-        `place`,
-        `dt`,
-        `duration`,
-        `comment`,
-        `status`
-        ) 
-        VALUES (
-        :name,
-        :type_id,
-        :place,
-        :dt,
-        :duration,
-        :comment,
-        :status
-        );";
+    if ($task_data["submit"] == 'Добавить') {
+        $stmt = "INSERT INTO `tasks`(
+            `name`, 
+            `type_id`, 
+            `place`,
+            `dt`,
+            `duration`,
+            `comment`,
+            `status`
+            ) 
+            VALUES (
+            :name,
+            :type_id,
+            :place,
+            :dt,
+            :duration,
+            :comment,
+            :status
+            );";
+    
+        $temp = $db->prepare($stmt);
+    
+        $temp -> execute(array(
+            'name' => $task_data['name'],
+            'type_id' => $type_id,
+            'place' => $task_data['place'],
+            'dt' => date_format($dt, 'Y-m-d H:i'),
+            'duration' => $task_data['duration'],
+            'comment' => $task_data['comment'],
+            'status' => 0
+        ));
+    } else {
+        $stmt = "UPDATE `tasks` 
+        SET 
+        `name`=:name,
+        `type_id`=:type_id,
+        `place`=:place,
+        `dt`=:dt,
+        `duration`=:duration,
+        `comment`=:comment
+        WHERE `id`=:id;
+        ";
 
-    $temp = $db->prepare($stmt);
+        $temp = $db->prepare($stmt);
 
-    $temp -> execute(array(
-        'name' => $task_data['name'],
-        'type_id' => $type_id,
-        'place' => $task_data['place'],
-        'dt' => date_format($dt, 'Y-m-d H:i'),
-        'duration' => $task_data['duration'],
-        'comment' => $task_data['comment'],
-        'status' => 0
-    ));
+        $temp -> execute(array(
+            'name' => $task_data['name'],
+            'type_id' => $type_id,
+            'place' => $task_data['place'],
+            'dt' => date_format($dt, 'Y-m-d H:i'),
+            'duration' => $task_data['duration'],
+            'comment' => $task_data['comment'],
+            'id' => $task_data['id']
+        ));
+    }
+
 
     header("Location: ../index.php"); 
